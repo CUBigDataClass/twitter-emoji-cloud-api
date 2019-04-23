@@ -10,13 +10,12 @@ const connection = mysql.createConnection({
   host: "35.238.151.156",
   user: config.MYSQL_USER,
   password: config.MYSQL_PASSWORD,
-  database: "EMOJI_CLOUD"
+  database: "EMOJI_CLOUD",
 });
-
 
 connection.connect((err, ...args) => {
   if (err) {
-    console.err(err, args);
+    console.error(err, args);
     throw err;
   }
 });
@@ -76,7 +75,7 @@ app.get('/api/emojis', async (req, res) => {
   }
 });
 
-app.get('/api/:year/:month/:day', async (req, res) => {
+app.get('/api/emojis/:year/:month/:day', async (req, res) => {
   const { year, month, day } = req.params;
   const { top = 10 } = req.query;
   console.log({ year, month, day });

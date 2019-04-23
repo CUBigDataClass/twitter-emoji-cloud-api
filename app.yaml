@@ -1,0 +1,3 @@
+runtime: nodejs8
+beta_settings:
+  cloud_sql_instances: big-data-energy:us-central1:big-data-energy-mysql
