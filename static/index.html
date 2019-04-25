@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Total Emojis</title>
+</head>
+
+<body>
+  <header>
+    <h2>Total Emoji Counts</h2>
+  </header>
+  <section class="counts">
+    <table>
+      <thead>
+        <th>Emoji</th>
+        <th>Count</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</body>
+<script>
+  const getData = async (date) => {
+    const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10`)
+      .catch(reason => console.log);
+    const data = await res.json()
+      .catch(reason => console.log);
+    return data;
+  }
+  const updateTable = (tableRows, data) => {
+    for (let i = 0; i < 10; i++) {
+      const { emoji, occurrences } = data[i];
+      const children = tableRows[i].children;
+      children[0].innerText = emoji;
+      children[1].innerText = occurrences.toLocaleString();
+    }
+  }
+  const tableRows = document.querySelectorAll('tbody tr');
+  setInterval(async () => {
+    updateTable(tableRows, await getData());
+  }, 1000);
+
+</script>
+
+</html>

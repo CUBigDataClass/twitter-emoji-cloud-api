@@ -63,12 +63,13 @@ const queryDate = (date, top) => {
 }
 
 app.use(cors());
+app.use(express.static('static'));
 
 app.get('/api/emojis', async (req, res) => {
   const { top = 10 } = req.query;
   const result = await queryTop(top)
     .catch(e => {
-      res.send(e);
+      res.json({e});
       console.log(e);
       return;
     });
@@ -82,7 +83,7 @@ app.get('/api/emojis/:year/:month/:day', async (req, res) => {
   const date = new Date(year, month - 1, day);
   const result = await queryDate(date, top)
     .catch(e => {
-      res.send(e);
+      res.json({e});
       console.log(e);
       return;
     });
