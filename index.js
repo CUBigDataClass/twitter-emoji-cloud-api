@@ -66,27 +66,27 @@ app.use(cors());
 
 app.get('/api/emojis', async (req, res) => {
   const { top = 10 } = req.query;
-  try {
-    const result = await queryTop(top);
-    res.json(result.map((row) => ({ emoji: row.EMOJI_NAME, occurrences: row.OCC })))
-  } catch (e) {
-    res.send(e);
-    throw e;
-  }
+  const result = await queryTop(top)
+    .catch(e => {
+      res.send(e);
+      console.log(e);
+      return;
+    });
+  res.json(result.map((row) => ({ emoji: row.EMOJI_NAME, occurrences: row.OCC })))
 });
 
 app.get('/api/emojis/:year/:month/:day', async (req, res) => {
   const { year, month, day } = req.params;
   const { top = 10 } = req.query;
   console.log({ year, month, day });
-  try {
-    const date = new Date(year, month - 1, day);
-    const result = await queryDate(date, top);
-    res.json(result.map((row) => ({ emoji: row.EMOJI_NAME, occurrences: row.OCC })))
-  } catch (e) {
-    res.send(e);
-    throw e;
-  }
+  const date = new Date(year, month - 1, day);
+  const result = await queryDate(date, top)
+    .catch(e => {
+      res.send(e);
+      console.log(e);
+      return;
+    });
+  res.json(result.map((row) => ({ emoji: row.EMOJI_NAME, occurrences: row.OCC })))
 });
 
 app.listen(port, () => {
