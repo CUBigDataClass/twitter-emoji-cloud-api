@@ -10,52 +10,63 @@
 
 <body>
   <header>
-    <h2>Total Emoji Counts</h2>
+    <h2>Total Emoji Counts in the Last Minute</h2>
   </header>
   <section class="counts">
     <table>
       <thead>
         <th>Emoji</th>
+        <th>HEX</th>
         <th>Count</th>
       </thead>
       <tbody>
         <tr>
           <td></td>
           <td></td>
-        </tr>
-        <tr>
-          <td></td>
           <td></td>
         </tr>
         <tr>
           <td></td>
-          <td></td>
-        </tr>
-        <tr>
           <td></td>
           <td></td>
         </tr>
         <tr>
           <td></td>
           <td></td>
-        </tr>
-        <tr>
-          <td></td>
           <td></td>
         </tr>
         <tr>
           <td></td>
-          <td></td>
-        </tr>
-        <tr>
           <td></td>
           <td></td>
         </tr>
         <tr>
           <td></td>
           <td></td>
+          <td></td>
         </tr>
         <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
           <td></td>
           <td></td>
         </tr>
@@ -65,7 +76,8 @@
 </body>
 <script>
   const getData = async (date) => {
-    const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10`)
+    const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10&minutes=1`)
+    //const res = await fetch(`http://localhost:3000/api/emojis?top=10&minutes=1`)
       .catch(reason => console.log);
     const data = await res.json()
       .catch(reason => console.log);
@@ -73,10 +85,11 @@
   }
   const updateTable = (tableRows, data) => {
     for (let i = 0; i < 10; i++) {
-      const { emoji, occurrences } = data[i];
+      const { EMOJI_NAME, TWEET_COUNT, HTML_HEX_CODE } = data[i];
       const children = tableRows[i].children;
-      children[0].innerText = emoji;
-      children[1].innerText = occurrences.toLocaleString();
+      children[0].innerText = EMOJI_NAME;
+      children[1].innerText = String.fromCodePoint(parseInt(HTML_HEX_CODE.replace('&#','0')));
+      children[2].innerText = TWEET_COUNT.toLocaleString();
     }
   }
   const tableRows = document.querySelectorAll('tbody tr');

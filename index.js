@@ -20,42 +20,89 @@ connection.connect((err, ...args) => {
   }
 });
 
+const queryString = (top, minutes) => {
+  if (top && minutes) {
+    return `
+      SELECT
+        T.EMOJI_NAME,
+        COUNT(*) AS TWEET_COUNT,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      FROM
+        EMOJI_CLOUD.EMOJIS E
+        JOIN EMOJI_CLOUD.TWEETS T ON
+        E.EMOJI_NAME = T.EMOJI_NAME
+      WHERE
+        T.TWEET_DATETIME > NOW() - INTERVAL ${minutes} MINUTE
+      GROUP BY
+        T.EMOJI_NAME,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      ORDER BY
+        COUNT(*) DESC
+      LIMIT ${top};`;
+  } else if (top) {
+    return `
+      SELECT
+        T.EMOJI_NAME,
+        COUNT(*) AS TWEET_COUNT,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      FROM
+        EMOJI_CLOUD.EMOJIS E
+        JOIN EMOJI_CLOUD.TWEETS T ON
+        E.EMOJI_NAME = T.EMOJI_NAME
+      GROUP BY
+        T.EMOJI_NAME,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      ORDER BY
+        COUNT(*) DESC
+      LIMIT ${top};`;
+  } else if (minutes) {
+    return `
+      SELECT
+        T.EMOJI_NAME,
+        COUNT(*) AS TWEET_COUNT,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      FROM
+        EMOJI_CLOUD.EMOJIS E
+        JOIN EMOJI_CLOUD.TWEETS T ON
+        E.EMOJI_NAME = T.EMOJI_NAME
+      WHERE
+        T.TWEET_DATETIME > NOW() - INTERVAL ${minutes} MINUTE
+      GROUP BY
+        T.EMOJI_NAME,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      ORDER BY
+        COUNT(*) DESC`;
+  } else {
+    return `
+      SELECT
+        T.EMOJI_NAME,
+        COUNT(*) AS TWEET_COUNT,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      FROM
+        EMOJI_CLOUD.EMOJIS E
+        JOIN EMOJI_CLOUD.TWEETS T ON
+        E.EMOJI_NAME = T.EMOJI_NAME
+      GROUP BY
+        T.EMOJI_NAME,
+        E.EMOJI_DESC,
+        E.HTML_HEX_CODE
+      ORDER BY
+        COUNT(*) DESC`;
+  }
+}
 
-const queryTop = (top) => {
-  const topEmojisQueryString = `
-    SELECT EMOJI_NAME, COUNT(EMOJI_NAME) AS OCC 
-    FROM TWEETS 
-    GROUP BY EMOJI_NAME
-    ORDER BY OCC DESC
-    LIMIT ${top};
-    `;
+const query = (top, minutes) => {
   return new Promise((resolve, reject) => {
-    connection.query(topEmojisQueryString, function (error, results, fields) {
-      if (error) {
-        reject(error);
-      } else {
-        console.log('Results: ', results);
-        resolve(results);
-      }
-    });
-  });
-};
-
-const queryDate = (date, top) => {
-  const queryString = `
-    SELECT EMOJI_NAME, COUNT(EMOJI_NAME) AS OCC 
-    FROM TWEETS 
-    WHERE TWEET_DATETIME > ${mysql.format('?', date)}
-    GROUP BY EMOJI_NAME
-    ORDER BY OCC DESC
-    LIMIT ${top};
-    `;
-  return new Promise((resolve, reject) => {
-    connection.query(queryString, function (error, results, fields) {
-      if (error) {
-        reject(error);
-      } else {
-        console.log('Results: ', results);
+    connection.query(queryString(top, minutes), (error, results, fields) => {
+      if (error) reject(error)
+      else {
         resolve(results);
       }
     });
@@ -66,28 +113,14 @@ app.use(cors());
 app.use(express.static('static'));
 
 app.get('/api/emojis', async (req, res) => {
-  const { top = 10 } = req.query;
-  const result = await queryTop(top)
+  const { top = 10, minutes } = req.query;
+  const result = await query(top, minutes)
     .catch(e => {
-      res.json({e});
+      res.json({ e });
       console.log(e);
       return;
     });
-  res.json(result.map((row) => ({ emoji: row.EMOJI_NAME, occurrences: row.OCC })))
-});
-
-app.get('/api/emojis/:year/:month/:day', async (req, res) => {
-  const { year, month, day } = req.params;
-  const { top = 10 } = req.query;
-  console.log({ year, month, day });
-  const date = new Date(year, month - 1, day);
-  const result = await queryDate(date, top)
-    .catch(e => {
-      res.json({e});
-      console.log(e);
-      return;
-    });
-  res.json(result.map((row) => ({ emoji: row.EMOJI_NAME, occurrences: row.OCC })))
+    res.json(result);
 });
 
 app.listen(port, () => {
