@@ -1,0 +1,11 @@
+#myChart {
+    height: 100%;
+    width: 100%;
+    min-height: 100px;
+    padding-bottom: 1em;
+    font-family: 'Roboto', sans-serif;
+}
+
+.zc-ref {
+    display: none;
+}

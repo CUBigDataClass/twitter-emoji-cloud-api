@@ -5,9 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <script src="web/js/zingchart-wordcloud.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+  <script src="script.js" defer></script>
   <title>Total Emojis</title>
 </head>
-
 <body>
   <header>
     <h2>Total Emoji Counts in the Last Minute</h2>
@@ -73,30 +76,14 @@
       </tbody>
     </table>
   </section>
+  <article class="ui">
+    <div id="myChart">
+      <a class="zc-ref" href="https://www.zingchart.com">Powered by ZingChart</a>
+    </div>
+  </article>
+  <section>
+    <canvas id='bar-chart'></canvas>
+  </section>
 </body>
-<script>
-  const getData = async (minutes = 1) => {
-    const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10&minutes=${minutes}`)
-    //const res = await fetch(`http://localhost:3000/api/emojis?top=10&minutes=1`)
-      .catch(reason => console.log);
-    const data = await res.json()
-      .catch(reason => console.log);
-    return data;
-  }
-  const updateTable = (tableRows, data) => {
-    for (let i = 0; i < 10; i++) {
-      const { EMOJI_NAME, TWEET_COUNT, HTML_HEX_CODE } = data[i];
-      const children = tableRows[i].children;
-      children[0].innerText = EMOJI_NAME;
-      children[1].innerText = String.fromCodePoint(parseInt(HTML_HEX_CODE.replace('&#','0')));
-      children[2].innerText = TWEET_COUNT.toLocaleString();
-    }
-  }
-  const tableRows = document.querySelectorAll('tbody tr');
-  setInterval(async () => {
-    updateTable(tableRows, await getData());
-  }, 1000);
-
-</script>
 
 </html>
