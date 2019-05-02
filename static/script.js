@@ -5,7 +5,16 @@ const barChartEl = document.querySelector('#bar-chart')
 let barData = [];
 
 const getData = async (minutes = 1) => {
-  const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=20&minutes=${minutes}`)
+  const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10&minutes=${minutes}`)
+    //const res = await fetch(`http://localhost:3000/api/emojis?top=10&minutes=1`)
+    .catch(reason => console.log);
+  const data = await res.json()
+    .catch(reason => console.log);
+  return data;
+}
+
+const getDataAllTime = async () => {
+  const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10`)
     //const res = await fetch(`http://localhost:3000/api/emojis?top=10&minutes=1`)
     .catch(reason => console.log);
   const data = await res.json()
