@@ -4,6 +4,8 @@ const lineChartEl = document.querySelector('#line-chart')
 let barData = [];
 let words = [];
 let data = [];
+let label = [];
+var datasets = [];
 
 const fetchRecent = async (minutes = 1) => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10&minutes=${minutes}`)
@@ -13,22 +15,20 @@ const fetchRecent = async (minutes = 1) => {
         .catch(reason => console.log);
     return data;
 }
-
-const fetchAllTime = async () => {
+const getDataAllTime = async () => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10`)
         .catch(reason => console.log);
     const data = await res.json()
         .catch(reason => console.log);
     return data;
 }
-
 const fetchTrend = async () => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis/trend`)
         .catch(reason => console.log);
     const data = await res.json()
         .catch(reason => console.log);
     const formatted = data.map(value => ({
-        label: value.HTML_HEX_CODE,
+        label: String.fromCodePoint(parseInt(value.HTML_HEX_CODE.replace('&#', '0'))),
         data: [
             value["6 DAYS AGO"],
             value["5 DAYS AGO"],
@@ -41,6 +41,21 @@ const fetchTrend = async () => {
     console.log({ formatted });
     return formatted;
 }
+
+//const parseTrend = (data) => {
+//    datasets = data.map(val => ({
+//        label: value.HTML_HEX_CODE,
+//        data: [
+//            value["6 DAYS AGO"],
+//            value["5 DAYS AGO"],
+//            value["4 DAYS AGO"],
+//            value["3 DAYS AGO"],
+//            value["2 DAYS AGO"],
+//            value["1 DAY AGO"]
+//        ]
+//    }));
+//}
+
 
 let barChart = new Chart(barChartEl, {
     type: 'horizontalBar',
@@ -73,46 +88,31 @@ let barChart = new Chart(barChartEl, {
     }
 });
 
+//var lineData = {
+//  labels: ["last day","1 day ago", "2 days ago", "3 days ago", "4 days ago", "5 days ago", "6 days ago"],
+//  datasets: [{
+//      label: "",
+//      data: [65, 59, 80, 81, 56, 55, 40,30,60,55,30,78],
+//    }, {
+//      label: "",
+//      data: [10, 20, 60, 95, 64, 78, 90,40,70,40,70,89],
+//    }
+//
+//  ]
+//};
 let lineChart = new Chart(lineChartEl, {
     type: 'line',
+    labels: ["1 day ago", "2 days ago", "3 days ago", "4 days ago", "5 days ago", "6 days ago"],
     data: {
-        labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
-        datasets: [{
-                data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
-                label: "Africa",
-                borderColor: "#3e95cd",
-                fill: false
-      }, {
-                data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
-                label: "Asia",
-                borderColor: "#8e5ea2",
-                fill: false
-      }, {
-                data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
-                label: "Europe",
-                borderColor: "#3cba9f",
-                fill: false
-      }, {
-                data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
-                label: "Latin America",
-                borderColor: "#e8c3b9",
-                fill: false
-      }, {
-                data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
-                label: "North America",
-                borderColor: "#c45850",
-                fill: false
-      }
-    ]
+        datasets: []
     },
     options: {
         title: {
             display: true,
-            text: 'World population per region (in millions)'
+            text: ''
         }
     }
 });
-
 
 /* Word cloud function */
 const updateCloud = (data) => {
@@ -184,3 +184,13 @@ const updateBarChart = (data) => {
 //    const alldata = await fetchAllTime();
 //    updateCloud(alldata);
 // }, 30000);
+
+const setLineChart = async () => {
+   const trend = await fetchTrend();
+   lineChart.data.datasets = trend;
+   lineChart.update();
+}
+setLineChart();
+setInterval(async () => {
+    setLineChart();
+}, 1000 * 60 * 10);
