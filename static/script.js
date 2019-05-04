@@ -11,23 +11,23 @@ var pallete = ["#00876c", "#3e9669", "#65a465", "#8bb162", "#b2bd62", "#dac767",
 
 const fetchRecent = async (minutes = 1) => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10&minutes=${minutes}`)
-        .catch(reason => console.log);
+        .catch(console.log);
     const data = await res.json()
-        .catch(reason => console.log);
+        .catch(console.log);
     return data;
 }
 const fetchAllTime = async () => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=30`)
-        .catch(reason => console.log);
+        .catch(console.log);
     const data = await res.json()
-        .catch(reason => console.log);
+        .catch(console.log);
     return data;
 }
 const fetchTrend = async () => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis/trend`)
-        .catch(reason => console.log);
+        .catch(console.log);
     const data = await res.json()
-        .catch(reason => console.log);
+        .catch(console.log);
     const formatted = data.map((value, i) => ({
         label: String.fromCodePoint(parseInt(value.HTML_HEX_CODE.replace('&#', '0'))),
         backgroundColor: pallete[i],
