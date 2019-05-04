@@ -5,7 +5,7 @@ let barData = [];
 let words = [];
 let data = [];
 
-const getData = async (minutes = 1) => {
+const fetchRecent = async (minutes = 1) => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10&minutes=${minutes}`)
         //const res = await fetch(`http://localhost:3000/api/emojis?top=10&minutes=1`)
         .catch(reason => console.log);
@@ -14,16 +14,31 @@ const getData = async (minutes = 1) => {
     return data;
 }
 
-const getDataAllTime = async () => {
+const fetchAllTime = async () => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10`)
-        //const res = await fetch(`http://localhost:3000/api/emojis?top=10&minutes=1`)
         .catch(reason => console.log);
     const data = await res.json()
         .catch(reason => console.log);
     return data;
 }
 
-
+const fetchTrend = async () => {
+    const res = await fetch(`https://big-data-energy.appspot.com/api/emojis/trend`)
+        .catch(reason => console.log);
+    const data = await res.json()
+        .catch(reason => console.log);
+    return data.map(value => ({
+        label: value.HTML_HEX_CODE,
+        data: [
+            value["6 DAYS AGO"],
+            value["5 DAYS AGO"],
+            value["4 DAYS AGO"],
+            value["3 DAYS AGO"],
+            value["2 DAYS AGO"],
+            value["1 DAY AGO"],
+        ]
+    }));
+}
 
 let barChart = new Chart(barChartEl, {
     type: 'horizontalBar',
@@ -157,13 +172,13 @@ const updateBarChart = (data) => {
     barChart.update();
 }
 
-//setInterval(async () => {
-//    const data = await getData();
+// setInterval(async () => {
+//    const data = await fetchRecent();
 //    updateBarChart(data);
 //    updateCloud(data);
-//}, 10000);
+// }, 10000);
 
-//setInterval(async () => {
-//    const alldata = await getDataAllTime();
+// setInterval(async () => {
+//    const alldata = await fetchAllTime();
 //    updateCloud(alldata);
-//}, 30000);
+// }, 30000);
