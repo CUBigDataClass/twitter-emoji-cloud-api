@@ -1,9 +1,181 @@
+body {
+    max-width: 90%;
+    margin: auto;
+    background-color: white;
+    font-size: 12px;
+}
+
+/*Grid Layout*/
+.container {
+    display: grid;
+    grid-template-rows: 1fr 20fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "header nav "
+        "main main  ";
+    grid-gap: .2em;
+    height: 100%;
+}
+
+header {
+    grid-area: header;
+}
+
+nav {
+    grid-area: nav;
+}
+
+main {
+    grid-area: main;
+    height: 100%;
+    /*
+    display: flex;
+    flex-direction: column;
+*/
+}
+
+/*Top Nav*/
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.onPage {
+    color: red;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 2em;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+li {
+    padding-left: 2em;
+}
+
+/*/Image gallery grid inside contact*/
+.image-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+    grid-gap: .5em;
+}
+
+.project {
+    position: relative;
+}
+
+.image {
+    line-height: 0;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.image img {
+    transition: .3s ease-in;
+    transform: scale(1);
+}
+
+.title {
+    font-family: 'lato', sans-serif;
+    font-size: 1.5em;
+    text-align: center;
+    z-index: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: opacity .2s;
+    background: rgba(36, 36, 36, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.project:hover .title {
+    opacity: .8;
+    background-color: black;
+}
+
+.project:hover p {
+    color: white;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+
+/*Basic Elements*/
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Poppins', serif;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 600;
+    text-align: left;
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.3em;
+}
+
+.text {
+    margin: 0 10%;
+    text-align: justify;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: "top-left top-right""bottom bottom";
+}
+
+.top-left {
+    grid-area: top-left;
+}
+
+.top-right {
+    grid-area: top-right;
+    width: 100%;
+    height: 100%;
+}
+
+.bottom {
+    grid-area: bottom;
+    max-width: 95%;
+    margin: auto;
+}
+
+#bar-chart {
+    height: 200%;
+}
+
+
 #myChart {
     height: 100%;
     width: 100%;
-    min-height: 100px;
-    padding-bottom: 1em;
-    font-family: 'Roboto', sans-serif;
+    min-height: 150px;
 }
 
 .zc-ref {
