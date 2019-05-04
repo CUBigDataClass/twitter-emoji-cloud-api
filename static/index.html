@@ -2,88 +2,55 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-  <script src="web/js/zingchart-wordcloud.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-  <script src="script.js" defer></script>
-  <title>Total Emojis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script src="web/js/zingchart-wordcloud.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato|Poppins" rel="stylesheet">
+    <script src="script.js" defer></script>
+    <link href="styles.css" rel="stylesheet">
+    <title>Emoji's</title>
 </head>
+
 <body>
-  <header>
-    <h2>Total Emoji Counts in the Last Minute</h2>
-  </header>
-  <section class="counts">
-    <table>
-      <thead>
-        <th>Emoji</th>
-        <th>HEX</th>
-        <th>Count</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-  <article class="ui">
-    <div id="myChart">
-      <a class="zc-ref" href="https://www.zingchart.com">Powered by ZingChart</a>
+    <div class="container">
+        <header>
+            <h1>
+                <a href="index.html">Big Data Energy</a>
+            </h1>
+        </header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="about.html">About.</a>
+                </li>
+                <li>
+                    <a href='team.html'>Team.</a>
+                </li>
+            </ul>
+        </nav>
+        <main>
+            <div class="grid-container">
+                <div class="top-left">
+                    <h2>Top Emoji's(all time)</h2>
+                    <div id="myChart">
+                        <a class="zc-ref" href="https://www.zingchart.com">Powered by ZingChart</a>
+                    </div>
+                </div>
+                <div class="top-right">
+                    <h2>Top Trending Emoji(last minute)</h2>
+                    <canvas id='bar-chart'></canvas>
+                </div>
+                <div class="bottom">
+                    <h2>Top trending emoji over time</h2>
+                    <canvas id='line-chart'></canvas>
+                </div>
+            </div>
+        </main>
     </div>
-  </article>
-  <section>
-    <canvas id='bar-chart'></canvas>
-  </section>
+
 </body>
 
 </html>
