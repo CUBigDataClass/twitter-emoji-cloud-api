@@ -27,7 +27,7 @@ const fetchTrend = async () => {
         .catch(reason => console.log);
     const data = await res.json()
         .catch(reason => console.log);
-    return data.map(value => ({
+    const formatted = data.map(value => ({
         label: value.HTML_HEX_CODE,
         data: [
             value["6 DAYS AGO"],
@@ -38,6 +38,8 @@ const fetchTrend = async () => {
             value["1 DAY AGO"],
         ]
     }));
+    console.log({ formatted });
+    return formatted;
 }
 
 let barChart = new Chart(barChartEl, {
