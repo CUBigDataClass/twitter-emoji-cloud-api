@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "gcloud kms decrypt --location global --keyring bde-keyring --key twitter-emoji-api-key --ciphertext-file config.json.encrypted --plaintext-file config.json", 
+    "prestart": "/bin/bash ./decrypt.sh",
     "start": "node index.js"
   },
   "author": "Big Data Energy",
