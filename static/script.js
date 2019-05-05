@@ -73,13 +73,6 @@ let barChart = new Chart(barChartEl, {
         }
     }
 });
-const updateBarChart = (data) => {
-    const labels = data.map(val => String.fromCodePoint(parseInt(val.HTML_HEX_CODE.replace('&#', '0'))));
-    const values = data.map(val => val.TWEET_COUNT);
-    barChart.data.datasets[0].data = values;
-    barChart.data.labels = labels;
-    barChart.update();
-}
 
 let lineChart = new Chart(lineChartEl, {
     type: 'bar',
@@ -150,6 +143,14 @@ const updateCloud = async () => {
 
 
 updateCloud();
+
+const updateBarChart = (data) => {
+    const labels = data.map(val => String.fromCodePoint(parseInt(val.HTML_HEX_CODE.replace('&#', '0'))));
+    const values = data.map(val => val.TWEET_COUNT);
+    barChart.data.datasets[0].data = values;
+    barChart.data.labels = labels;
+    barChart.update();
+}
 
  setInterval(async () => {
     const data = await fetchRecent();
