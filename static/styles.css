@@ -13,7 +13,7 @@ body {
     grid-template-areas:
         "header nav "
         "main main  ";
-    grid-gap: .2em;
+    grid-gap: .5em;
     height: 100%;
 }
 
@@ -60,54 +60,6 @@ li {
     padding-left: 2em;
 }
 
-/*/Image gallery grid inside contact*/
-.image-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
-    grid-gap: .5em;
-}
-
-.project {
-    position: relative;
-}
-
-.image {
-    line-height: 0;
-    overflow: hidden;
-    object-fit: cover;
-}
-
-.image img {
-    transition: .3s ease-in;
-    transform: scale(1);
-}
-
-.title {
-    font-family: 'lato', sans-serif;
-    font-size: 1.5em;
-    text-align: center;
-    z-index: 1;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    transition: opacity .2s;
-    background: rgba(36, 36, 36, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-.project:hover .title {
-    opacity: .8;
-    background-color: black;
-}
-
-.project:hover p {
-    color: white;
-}
-
 img {
     width: 100%;
     height: auto;
@@ -147,8 +99,9 @@ p {
 .grid-container {
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 45% 50%;
     grid-template-areas: "top-left top-right""bottom bottom";
+    grid-gap: 1em;
 }
 
 .top-left {
@@ -165,6 +118,7 @@ p {
     grid-area: bottom;
     max-width: 95%;
     margin: auto;
+    padding-top: 1em;
 }
 
 #bar-chart {
