@@ -1,8 +1,12 @@
+@import url('./normalize.css');
+
 body {
     max-width: 90%;
     margin: auto;
     background-color: white;
     font-size: 12px;
+    height: 100vh;
+    min-height: 850px;
 }
 
 /*Grid Layout*/
@@ -98,14 +102,17 @@ p {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 45% 50%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 35fr 45fr;
     grid-template-areas: "top-left top-right""bottom bottom";
-    grid-gap: 1em;
+    grid-gap: 40px;
+    height: 90%;
 }
 
 .top-left {
     grid-area: top-left;
+    width: 100%;
+    height: 100%;
 }
 
 .top-right {
@@ -116,22 +123,29 @@ p {
 
 .bottom {
     grid-area: bottom;
-    max-width: 95%;
+    height: 100%;
+    width: 100%;
     margin: auto;
     padding-top: 1em;
 }
 
-#bar-chart {
-    height: 200%;
-}
-
-
 #myChart {
     height: 100%;
     width: 100%;
-    min-height: 150px;
+    /* min-height: 150px; */
 }
 
 .zc-ref {
     display: none;
+}
+
+.card {
+    box-shadow: 0 0 50px 23px rgba(139, 139, 139, 0.112);
+    background-color: white;
+}
+
+.canvas-container {
+    position: relative;
+    width: 95%;
+    height: 80%;
 }

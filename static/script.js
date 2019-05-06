@@ -8,6 +8,8 @@ let label = [];
 var datasets = [];
 var pallete = ["#00876c", "#3e9669", "#65a465", "#8bb162", "#b2bd62", "#dac767", "#deae53", "#e19448", "#e17945", "#dd5c48"];
 
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.maintainAspectRatio = false;
 
 const fetchRecent = async (minutes = 1) => {
     const res = await fetch(`https://big-data-energy.appspot.com/api/emojis?top=10&minutes=${minutes}`)
@@ -52,7 +54,7 @@ let barChart = new Chart(barChartEl, {
             data: [],
             backgroundColor: pallete,
             borderWidth: 3
-    }]
+        }]
     },
     options: {
         maintainAspectRatio: false,
@@ -82,9 +84,9 @@ let lineChart = new Chart(lineChartEl, {
     },
     options: {
         title: {
-            display: true,
+            display: false,
             text: ''
-        }
+        },
     }
 });
 
@@ -101,11 +103,11 @@ const updateCloud = async () => {
             {
                 "type": "wordcloud",
                 "options": {
-                    maxFontSize: 100,
-                    minFontSize: 30,
+                    maxFontSize: 85,
+                    minFontSize: 20,
                     aspect: 'spiral',
                     "style": {
-                        backgroundColor: 'black',
+                        // backgroundColor: 'black',
                         borderRadius: 10,
                         margin: '60em 60em',
                         hoverState: {
@@ -130,13 +132,13 @@ const updateCloud = async () => {
                     },
                     words
                 }
-      }
-    ]
+            }
+        ]
     };
     zingchart.render({
         id: 'myChart',
         data: myConfig,
-        height: '100%',
+        height: '90%',
         width: '100%'
     });
 }
@@ -152,16 +154,18 @@ const updateBarChart = (data) => {
     barChart.update();
 }
 
- setInterval(async () => {
+setInterval(async () => {
     const data = await fetchRecent();
     updateBarChart(data);
- }, 1000);
+}, 1000);
 
 const setLineChart = async () => {
     const trend = await fetchTrend();
     lineChart.data.datasets = trend;
     lineChart.update();
 }
+
+
 
 setLineChart();
 setInterval(async () => {

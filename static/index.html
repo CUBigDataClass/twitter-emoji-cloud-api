@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-    <script src="web/js/zingchart-wordcloud.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato|Poppins" rel="stylesheet">
     <script src="script.js" defer></script>
     <link href="styles.css" rel="stylesheet">
     <title>Emoji's</title>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -32,19 +32,25 @@
         </nav>
         <main>
             <div class="grid-container">
-                <div class="top-left">
+                <div class="top-left card">
                     <h2>Top Emoji's(all time)</h2>
-                    <div id="myChart">
-                        <a class="zc-ref" href="https://www.zingchart.com">Powered by ZingChart</a>
+                    <div class='canvas-container'>
+                        <div id="myChart">
+                            <a class="zc-ref" href="https://www.zingchart.com">Powered by ZingChart</a>
+                        </div>
                     </div>
                 </div>
-                <div class="top-right">
+                <div class="top-right card">
                     <h2>Top Trending Emoji's(last minute)</h2>
-                    <canvas id='bar-chart'></canvas>
+                    <div class='canvas-container'>
+                        <canvas id='bar-chart'></canvas>
+                    </div>
                 </div>
-                <div class="bottom">
+                <div class="bottom card">
                     <h2>Top trending emoji's over the past week</h2>
-                    <canvas id='line-chart'></canvas>
+                    <div class='canvas-container'>
+                        <canvas id='line-chart'></canvas>
+                    </div>
                 </div>
             </div>
         </main>
